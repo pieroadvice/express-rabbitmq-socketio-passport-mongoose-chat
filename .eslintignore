@@ -1,0 +1,7 @@
+/node_modules
+/test
+/coverage
+/dist
+/public/**
+/public/*
+/public/js/main.js

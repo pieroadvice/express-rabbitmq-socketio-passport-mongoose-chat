@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1 !{message}
+  - if(Object.keys(error).length !== 0 ) {
+    h2 !{error.status}
+    pre #{error.stack}
+  - }
+  a(href='/login') Take me to the log in page!
