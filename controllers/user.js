@@ -10,42 +10,14 @@ exports.register = (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   let password = req.body.password;
-  const password2 = req.body.confirmPassword;
-
-  if (!username || !password || !password2) {
-    req.flash('error', 'Please, fill in all the fields.');
-    res.redirect('register');
-    return;
-  }
-
-  if (password !== password2) {
-    req.flash('error', 'Passwords entered do not match. Please enter your password again.');
-    res.redirect('register');
-    return;
-  }
-
-  User.findOne({ username: username })
-    .then(data => {
-      if (data) {
-        req.flash('error', 'user already exists');
-        res.redirect('register');
-      } else {
-        password = bcrypt.hashSync(password, parseInt(process.env.BCRYPT_ROUNDS, 10));
-        let document = new User({
-          username,
-          email,
-          password
-        });
-        return document.save();
-      }
-    })
-    .then(() => {
-      res.redirect('login');
-    })
-    .catch(err => {
-      req.flash('error', err.message);
-      res.redirect('register');
-    });
+  password = bcrypt.hashSync(password, parseInt(process.env.BCRYPT_ROUNDS, 10));
+  let document = new User({
+    username,
+    email,
+    password
+  });
+  document.save();
+  res.redirect('login');
 };
 
 exports.login = (req, res) => {
