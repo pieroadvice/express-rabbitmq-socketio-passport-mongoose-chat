@@ -59,6 +59,7 @@ exports.login = (req, res) => {
           req.flash('error', 'error creating the session please try again.');
           res.redirect('login');
         }
+        // console.log('===========', req.session.passport.user.username);
         res.redirect('chatroom');
       });
     }

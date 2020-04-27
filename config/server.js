@@ -1,16 +1,13 @@
 /* eslint-disable no-undef */
 'use strict';
 
-require('dotenv').config();
-
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-module.exports = server => {
-  server.use(express.static(path.join(appRoot, 'public')));
+module.exports = (server, appRoot) => {
   server.set('view engine', 'jade');
-  server.set('views', path.join(appRoot, '/views'));
+  server.set('views', path.join(appRoot, 'views'));
   server.locals.pretty = true;
 
   server.use(bodyParser.urlencoded({ extended: false }));

@@ -1,28 +1,22 @@
 extends layout
- 
+
 block content 
+  script(type='text/javascript').
+    var user = !{JSON.stringify(user)};
   .row
-    #formModal.modal
-      .modal-dialog
-        .modal-content
-          .modal-header
-            h1.title-modal
-          .modal-body
-            p.formModal
-          .modal-footer
-    #title
+    .col-md-12.text-center#title
       h1 #{user}, welcome to the chatroom
-    .col-md-9#containerMessages
-      .panel.panel-primary.head
-        .panel-heading
-          p Messages
+  .row
+    .m-0.col-md-9.alert.alert-primary.align-middle.text-center Messages
+    .m-0.col-md-3.alert.alert-primary.align-middle.text-center Users
+  .row
+    .pt-2.col-md-9#containerMessages
       #chatMsgs
-    .col-md-3#containerUsers
-      .panel.panel-primary.head
-        .panel-heading
-          p Users
+    .pt-2.col-md-3#containerUsers
       #chatUsers
+  form.row(id='chatForm')
     .col-md-7#containerSendMessages
-      input.message.col-md-12.form-control(type="text",placeholder="Write a message")
+      input#message.message.col-md-12.form-control(type='text' placeholder='Write a message' name='message')
+      input(type='hidden' name='name' value='#{user}')
     .col-md-2#containerSendMessages
-      button.btn.btn-large.btn-block.btn-primary.sendMsg() Send
+      button.btn.btn-large.btn-block.btn-primary.sendMsg(type='submit') Send

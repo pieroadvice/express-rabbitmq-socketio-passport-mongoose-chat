@@ -7,10 +7,12 @@ const UserController = require('../controllers/user');
 
 const router = new Router();
 router.get('/login', UserController.showlogin);
-router.get('/register', UserController.showRegister);
 router.post('/login', UserController.login);
+router.get('/register', UserController.showRegister);
 router.post('/register', UserController.register);
 router.get('/chatroom', customMdw.ensureAuthenticated, ChatroomController.chatroom);
+router.post('/chatroom/messages', customMdw.ensureAuthenticated, ChatroomController.sendMessage);
+router.get('/chatroom/messages', customMdw.ensureAuthenticated, ChatroomController.getMessages);
 
 
 module.exports = router;

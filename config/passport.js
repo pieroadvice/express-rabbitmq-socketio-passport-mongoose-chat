@@ -31,7 +31,11 @@ module.exports = server => {
   passport.deserializeUser((user, done) => {
     done(null, user);
   });
-  server.use(session({ secret: 'secret secret secret' }));
+  server.use(session({
+    secret: 'secret secret secret',
+    resave: false,
+    saveUninitialized: false
+  }));
   server.use(passport.initialize());
   server.use(passport.session());
   server.use(flash());
