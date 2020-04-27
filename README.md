@@ -22,7 +22,6 @@ messages.
 
 ### TODOs
 - Implement tests
-messages.
 - Allow the use of multiple chatrooms
 
 ## Getting Started
