@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config({ path: '../.env' });
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
@@ -32,7 +34,7 @@ module.exports = server => {
     done(null, user);
   });
   server.use(session({
-    secret: 'secret secret secret',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
   }));
