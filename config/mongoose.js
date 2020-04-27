@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
 const mongoose = require('mongoose');
 
@@ -15,5 +15,3 @@ module.exports = () => {
       process.exit(1);
     });
 };
-
-

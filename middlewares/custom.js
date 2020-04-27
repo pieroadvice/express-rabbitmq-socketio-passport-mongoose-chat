@@ -3,8 +3,6 @@
 
 exports.ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
-    console.log('req.user', req.user);
-    console.log('is authenticated');
     res.locals.user = req.user.username || null;
     return next();
   } else {

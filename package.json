@@ -1,25 +1,27 @@
 {
   "name": "express-rabbitmq-socketio-passport-mongoose-chat",
   "version": "1.0.0",
-  "description": "",
+  "description": "chat example using rabbitMQ and socket.io, mongooose, passport, stock bot as an extra feature",
   "main": "server.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
+    "amqplib": "^0.5.5",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
+    "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "jade": "^1.11.0",
-    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.10",
     "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "passport-session": "^1.0.2"
+    "passport-session": "^1.0.2",
+    "request": "^2.88.2",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
