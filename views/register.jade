@@ -1,4 +1,4 @@
-extends layout
+extends basiclayout
 
 block content
   .main.container
@@ -21,6 +21,5 @@ block content
           div.form-group
             label(for='pw2') Confirm Password:
             input#pw2.form-control(type='password' name='confirmPassword')
-          button.btn.btn-primary(type='submit') Sign up
-            &nbsp;
+          button.btn.btn-primary(type='submit') Sign up &nbsp;  
           a.btn.btn-default(role='button', href='/login') log in

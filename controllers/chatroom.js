@@ -2,9 +2,9 @@
 
 require('dotenv').config({ path: '../.env' });
 
-const request = require('request');
-const csv = require('csvtojson');
+const moment = require('moment');
 const rabbitmq = require('../config/rabbitmq');
+const stockbot = require('../services/stockbot');
 
 exports.unprotected = (req, res) => {
   res.send('Ok. unprotected route');
@@ -29,6 +29,7 @@ exports.sendMessage = (req, res) => {
       let q = process.env.QUEUE_NAME;
       // some cleaning
       req.body.message = req.body.message.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, '');
+      req.body.time = moment().format('DD/MM/YYYY HH:mm:ss');
       let message = req.body.message;
       let msg = JSON.stringify(req.body);
 
@@ -38,26 +39,12 @@ exports.sendMessage = (req, res) => {
       ch.sendToQueue(q, new Buffer(msg), { persistent: true });
       let stock = /\/stock=([^\s]+)/.exec(message);
       if (stock && stock.length) {
-        csv()
-          .fromStream(request.get(`https://stooq.com/q/l/?s=${stock[1]}&f=sd2t2ohlcv&h&e=csv`))
-          .then(csvRow => {
-            msg = {};
-            msg.type = 'bot';
-            msg.name = 'StockBot';
-            // when there is no stock for the given param the result is N/D
-            if (csvRow[0].Close === 'N/D') {
-              msg.message = `Sorry there are no values for ${csvRow[0].Symbol} `;
-            } else {
-              msg.message = `The closing value for ${csvRow[0].Symbol} on ${csvRow[0].Date} ${csvRow[0].Time} is ${csvRow[0].Close} `;
-            }
-            msg = JSON.stringify(msg);
-            ch.publish(ex, '', new Buffer(msg), { persistent: false });
-            ch.sendToQueue(q, new Buffer(msg), { persistent: true });
-            ch.close(() => {
-              conn.close();
-            });
-            res.json(true);
+        stockbot.service(stock[1], ch, () => {
+          ch.close(() => {
+            conn.close();
           });
+          res.json(true);
+        });
       } else {
         ch.close(() => {
           conn.close();

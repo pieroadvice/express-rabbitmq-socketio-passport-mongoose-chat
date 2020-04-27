@@ -34,7 +34,7 @@ const setup = io => {
       if (err0) {
         throw new Error(err0);
       }
-      let ex = 'chat_ex';
+      let ex = process.env.EXCHANGE_NAME;
 
       ch.assertExchange(ex, 'fanout', { durable: false });
       ch.assertQueue('', { exclusive: true }, (err1, q) => {
